@@ -66,7 +66,8 @@ class TradingEngine:
             self.psi_calculator,
             self.trend_model,
             self.signal_model,
-            config
+            config,
+            symbol
         )
         
         # State

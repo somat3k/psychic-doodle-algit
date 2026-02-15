@@ -25,7 +25,8 @@ class PsiFreqScalperStrategy:
         psi_calculator: PsiFrequencyCalculator,
         trend_model: TrendDetectorModel,
         signal_model: SignalGeneratorModel,
-        config
+        config,
+        symbol: str = "BTC-USDT"
     ):
         """
         Initialize strategy
@@ -35,11 +36,13 @@ class PsiFreqScalperStrategy:
             trend_model: ML model for trend detection
             signal_model: ML model for signal generation
             config: Configuration object
+            symbol: Trading symbol
         """
         self.psi_calculator = psi_calculator
         self.trend_model = trend_model
         self.signal_model = signal_model
         self.config = config
+        self.symbol = symbol
         self.feature_engineer = FeatureEngineering()
         
         # Strategy state
@@ -118,7 +121,7 @@ class PsiFreqScalperStrategy:
         if trend == "bullish" and signal_action == 1:
             return Signal(
                 timestamp=datetime.now(),
-                symbol=candles[0].timestamp.strftime("%Y%m%d"),  # Placeholder
+                symbol=self.symbol,
                 action="buy",
                 confidence=signal_confidence,
                 reason=f"Bullish trend with Psi-freq {psi_freq:.2f}",
@@ -128,7 +131,7 @@ class PsiFreqScalperStrategy:
         elif trend == "bearish" and signal_action == 2:
             return Signal(
                 timestamp=datetime.now(),
-                symbol=candles[0].timestamp.strftime("%Y%m%d"),
+                symbol=self.symbol,
                 action="sell",
                 confidence=signal_confidence,
                 reason=f"Bearish trend with Psi-freq {psi_freq:.2f}",
