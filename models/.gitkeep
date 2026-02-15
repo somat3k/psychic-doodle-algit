@@ -1,0 +1,3 @@
+# Placeholder for models directory
+# ONNX models will be stored here
+# Run scripts/train_models.py to generate initial models
